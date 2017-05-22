@@ -1,0 +1,5 @@
+age = int(raw_input("How old are you?"))
+math = age + 30
+futureage = "/nIn thirty years, you'll be %r years old" % math
+
+print futureage 
