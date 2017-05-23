@@ -1,0 +1,123 @@
+def endgame():
+  print "Your game is over. Feel free to tempt fate again..."
+
+def godoor():
+  print "This is the go door function"
+  
+def examinedoor():
+  print "This is the examine door function"
+  
+def goladder():
+  print "this is the goladder function"
+  
+def examineladder():
+  print "This is the examine ladder function"
+  
+def gohole():
+  print "This is the go ladder function.."
+  
+def examinehole():
+  print "THis is the examine hole function."
+
+def wurmdeath():
+  print """
+  A monstrous wurm bursts out of the wall.
+  He doesn't think twice before sucking your organs out through your mouth."
+  """
+  endgame()
+
+def starvation():
+  print "Starvation function"
+  
+def checktime(limit):
+  global time, timeisup
+  if time <= limit:
+    timeisup = True
+  else:
+    print "..."
+
+time = 5
+timeisup == False
+firstchoice = None
+def startchoice(x): 
+  while True:
+    print "Would you like to examine the %s, or just go that way?" % x
+    global firstchoice
+    choice = raw_input('>')
+  
+    if "examine" in choice:
+      firstchoice = "examine"
+      break
+    elif  "go" in choice:
+      firstchoice = "go"
+      break
+    else:
+      print """
+      Sure, you do that, whatever... 
+      but YOU'RE WATING TIME.
+      """ % x
+
+def start():
+  print """
+  You are in a dark cave. 
+  How did you get there?
+  You know you don't like camping...
+  Oh well. You're hungry, so it's time to go home.
+  You see:
+    1. A door
+    2. a ladder
+    3. a hole
+    
+  What is interesting?"""
+  while True: 
+    next = raw_input("> ")
+    global firstchoice, time, timeisup
+    if "door" in next:
+      
+       startchoice("door")
+        
+       if firstchoice is "examine":
+         time -= 1
+         print "Time: ", time
+         examinedoor()
+       elif firstchoice is "go":
+         godoor()
+       else:
+          print "It is broken :("
+          
+    elif "ladder" in next:
+        startchoice("ladder")
+        
+        if firstchoice is "examine":
+          time -= 1
+          checktime(3)
+            if timeisup == True:
+                starvation()
+          print "Time: ", time
+          examineladder()
+        elif firstchoice is "go":
+          goladder()
+        else:
+          print "It is broken :("
+          
+    elif "hole" in next:
+        startchoice("hole")
+        
+        if firstchoice is "examine":
+         time -= 1
+         print "Time: ", time
+         examinehole()
+        elif firstchoice is "go":
+         gohole()
+        else:
+         print "It is broken :("
+         
+    else: 
+      time -= 1
+      print time
+      print "You're wasting time..."
+      checktime(3)
+        if timeisup is True:
+          starvation()
+    
+start()
