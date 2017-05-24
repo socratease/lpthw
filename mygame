@@ -6,33 +6,74 @@ def endgame():
   print "Your game is over. Feel free to tempt fate again..."
 
 def godoor():
-  print "This is the go door function"
+  print "You push the door open. As you go inside,"
+  wurmscare()
+  print """
+  Relieved, you exhale and turn to see a much larger room, with stone walls.
+  In the middle of the room is a tiger, prowling in circles.
+  The tiger wears a cheap conical paper party hat on his head.
+  You also see two more things: a cask of wine, near a wall,
+  and a trap door, near the middle of the room.
+  """
   
 def examinedoor():
-  print "This is the examine door function"
-  
+  print """"
+  That door is hellafancy! I mean, at least for a cave-door.
+  It's carved with many arcane symbols.
+  You lean in close to decipher the symbols. It's pretty dark, but then you see it:
+  These are all just dicks and swastikas.
+  """
+  checktime(2)
+  if timeisup:
+    wurmdeath()
+  else:
+    start()
+    
 def goladder():
-  print "this is the goladder function"
+  print """
   
 def examineladder():
   print """"
   This ladder is a bunch limbs tied together by rope.
   It's primitive, and pretty rotten.
   It leads above you, obviously, but it's too dark to tell where it goes.
-  
+  """
+  checktime(2)
+  if timeisup:
+    wurmdeath()
+  else:
+    start()
   
 def gohole():
   print "This is the go ladder function.."
   
 def examinehole():
-  print "THis is the examine hole function."
-
+  print """
+  This hole is more like a pit. 
+  It's not very deep—the bottom is about 10 feet down—
+  and the wall has footholds so you can climb down safely.
+  Opposite the climbable wall, you can tell there's a tunnel leading under
+  the room you're currently in.
+  """
+  checktime(2)
+  if timeisup:
+    wurmdeath()
+  else:
+    start()
+    
 def wurmdeath():
   print """
-  A monstrous wurm bursts out of the wall.
-  He doesn't think twice before sucking your organs out through your mouth."
-  """
+  A monstrous wurm bursts from the wall.
+  He doesn't think twice before sucking your organs out through your mouth.
+  You probably should've gotten out of there before he smelled you..."""
   endgame()
+
+def wurmscare():
+  print """
+  A monstrous wurm bursts from the wall in the room you were jsut in.
+  He's pissed that he missed dinner, but seems reluctant to follow you...
+  You got out of there just in time.
+  """
 
 def starvation():
   print """
@@ -96,7 +137,6 @@ def start():
        startchoice("door")
         
        if firstchoice is "examine":
-         print "Time: ", time
          examinedoor()
        elif firstchoice is "go":
          godoor()
@@ -107,12 +147,6 @@ def start():
         startchoice("ladder")
         
         if firstchoice is "examine":
-          checktime(3)
-          if timeisup: 
-            starvation()
-          else:
-            pass
-          print "Time: ", time
           examineladder()
         elif firstchoice is "go":
           goladder()
@@ -123,12 +157,6 @@ def start():
         startchoice("hole")
         
         if firstchoice is "examine":
-         checktime(3)
-         if timeisup: 
-            starvation()
-         else:
-            pass
-         print "Time: ", time
          examinehole()
         elif firstchoice is "go":
          gohole()
