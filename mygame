@@ -20,9 +20,14 @@ def contin():
   raw_input("[any key to continue]")
   
 def dead():
+  global tigerfriend
   print """
   You have no more life. :(
   """
+  if tigerfriend is True:
+    print "Your tiger friend is very very sad."
+  else:
+    pass
   endgame()
   
 def checktime(limit):
@@ -50,7 +55,8 @@ def wurmdeath():
   contin()
   print """
   A monstrous wurm bursts from the wall.
-  He doesn't think twice before sucking your organs out through your mouth.
+  He doesn't think twice before sucking your organs out through your mouth,
+  until you are a compressed sack of skin, like an empty Capri-Sun.
   You probably should've gotten out of there before he smelled you...
   """
   loselife(500)
@@ -65,6 +71,43 @@ def wurmdeath2():
   Frankly, you deserve it.
   """
   loselife(500)
+  
+def wurmdeath3():
+  global tigerfriend
+  contin()
+  if tigerfriend is True:
+    print """
+    Your tiger friend refuses to follow you back to the first room,
+    where the wurm was.
+    Abort? (yes/no)
+    """
+    abort2 = raw_input(". ")
+    if "y" in abort2:
+      print "You give up the hunt."
+      axeoptions()
+    if "n" in abort2:  
+      print"""
+      The monstrous wurm that you saw earlier is still there, in the first room. 
+      It hasn't been that long.
+      You swing at the wurm. 
+      """
+      contin()
+      """It is barely phased.
+      The wurm eats you slowly, ass first, as you struggle. 
+      Frankly, you deserve it.
+      """
+      loselife(500)
+  else:
+    print"""
+      The monstrous wurm that you saw earlier is still there, in the first room. 
+      It hasn't been that long.
+      You swing at the wurm. """
+      contin()
+      """It is barely phased.
+      The wurm eats you slowly, ass first, as you struggle. 
+      Frankly, you deserve it.
+      """
+      loselife(500)
 
 def wurmscare():
   print """
@@ -73,6 +116,9 @@ def wurmscare():
   You got out of there just in time.
   """
   contin()
+  """
+  Relieved, you exhale and turn to survey the room...
+  """
 
 def starvation():
   print """
@@ -155,6 +201,139 @@ def punchdeath():
     tiger()
   else: 
     pass
+  
+def chestdeath()
+  global tigerfriend
+  print"""
+  You unlatch the trunk and leverage the lid open. 
+  """
+  cont()
+  """
+  As soon as you do, the trunk swallows you up to your hips,
+  and then closes with such force that it chops your body clean in half.
+  All the important parts of you are locked in this chest forever.
+  """
+  if tigerfriend is True:
+    print "The tiger continues to be pals with the lower half of your body."
+  else:
+    pass
+  loselife(234)
+  
+def lampdeath():
+  global life, tigerfriend
+  contin()
+  if tigerfriend is True:
+    print """
+    When you start to reach out, your tiger shakes her head worriedly.
+    Abort? (yes/no)
+    """
+    abort = raw_input("> ")
+    if "y" in abort:
+      lampoptions()
+    if "n" in abort:
+      print """
+      It shocks you. It hurts. You shriek/yell/whatever you do...
+      and then lamp immediately mimics the pained sound you make, but twice as loud.
+      If you try to say other things, the lamp is silent.
+      The light stays on.
+      """
+      loselife(1)
+      if life > 0:
+        print "So you touched the lamp. GOOD4U."
+        lampoptions()
+      else:
+        pass
+  else:
+    print """
+    It shocks you. It hurts. You shriek/yell/whatever you do...
+    and then lamp immediately mimics the pained sound you make, but twice as loud.
+    If you try to say other things, the lamp is silent.
+    The light stays on.
+    """
+    loselife(1)
+    if life > 0:
+      print "So you touched the lamp. GOOD4U."
+      lampoptions()
+    else:
+      pass
+
+def lampdeath2():
+  global life, tigerfriend
+  contin()
+  if tigerfriend is True:
+    print """
+    When you start to swing at the lamp, your tiger shakes her head worriedly.
+    Abort? (yes/no)
+    """
+    abort = raw_input("> ")
+    if "y" in abort:
+      axeoptions()
+    if "n" in abort:
+      print """
+      You hit the CAST IRON lamp, and it shocks you. It hurts.
+      Idiot. Why would you hit a cast iron lamp with an axe?
+      """
+      loselife(1)
+      if life > 0:
+        print "You deserved that."
+        axeoptions()
+      else:
+        pass
+  else:
+    print """
+      You hit the CAST IRON lamp, and it shocks you. It hurts.
+      Idiot. Why would you hit a cast iron lamp with an axe?
+      """
+      loselife(1)
+      if life > 0:
+        print "You deserved that."
+        axeoptions()
+      else:
+        pass
+      
+def trunkattackdeath():
+  global life
+  contin()
+  print """
+  You walk up to the trunk and go to town.
+  The trunk splinters into many pieces, after emitting a short, low moan.
+  """
+  contin()
+  print """
+  Feeling satisfied, you prop yourself on the axe handle. 
+  You look up just in time to see the lamp careening towrads you.
+  """
+  contin()
+  print """
+  "HE WAS MY ONLY FRIEND!!!" the lamp wails.
+  """
+  contin()
+  print """
+  Uh-oh. You have just enough time to reflect on your own friendships 
+  before the lamp sends 1 billion watts through your body, 
+  frying you like crab rangoon.
+  """
+  loselife(965)
+  
+def chairattackdeath():
+  global happychair
+  contin()
+  print """
+  You hit the chair one time, hard.
+  It says, "OWWWWWWWwwww."
+  """
+  contin()
+  """
+  It kicks you in the genitals with an oaken leg.
+  """
+  loselife(1)
+  if life > 0:
+    if happychair is True:
+      print "Happychair: Not achieved"
+    else:
+      pass
+    happychair = False
+    axeoptions()
 
 def madness():
   print """
@@ -300,25 +479,9 @@ def startchoice(x):
 #
 #STARTINGROOM
 def godoor():
-  print "You push the door open. As you go inside,"
+  print "You push the door open. Before you see what's ahead..."
   wurmscare()
-  print """
-  Relieved, you exhale and turn to see a much larger room, with stone walls.
-  """
-  contin()
-  print """
-  In the middle of the room is a tiger, prowling in circles.
-  The tiger wears a cheap conical paper party hat on her head. 
-  She definitely sees you...
-  """
-  contin()
-  print """
-  You also see three more things: a cask of wine, against the nearest wall;
-  a trap door, near the middle of the room;
-  and another door like the one you just came through, on the wall across the room.
-  Oh yeah—also! ...the door across the room has a glowing red "EXIT" sign above it.
-  """
-  tiger()
+  tigerintro()
 
 def examinedoor():
   print """"
@@ -389,6 +552,46 @@ def examinehole():
 #All these numbered options, in any of the rooms:
 #could they be transformed to a list or hash, 
 #and then I could access the ones I want?
+def tigerintro()
+  contin()
+  print """
+  In the middle of the room is a tiger, prowling in circles.
+  The tiger wears a cheap conical paper party hat on her head. 
+  She definitely sees you...
+  """
+  contin()
+  print """
+  You also see three more things: a cask of wine, against the nearest wall;
+  a trap door, near the middle of the room;
+  and another door like the one you just came through, on the ba wall across the room.
+  Oh yeah—also! ...the door across the room has a glowing red "EXIT" sign above it.
+  """
+  tiger()
+
+def tigerintro2()
+  global tigerfriend
+  contin()
+  if tigerfriend = True
+    print """
+    You step out into the same room you were in before. Where you met the tiger.
+    """
+    tigeraction()
+  else:
+    print """
+    You are face to face with a tiger. Like, she's 10 feet away. 
+    Just staring at you. Hungrily?
+    She wears a cheap conical paper party hat on her head. 
+    After a couple seconds, she beings prowling in circles aroung the trap door.
+    """
+    contin()
+    print """
+    You also see three more things: a cask of wine, against the nearest wall;
+    a door in the direction of the room you woke up in;
+    and another door like the other ones you've seen today, on the back wall across the room.
+    Oh yeah—also! ...the door across the room has a glowing red "EXIT" sign above it.
+    """
+    tiger()
+  
 def tiger():
   contin()
   print """
@@ -675,27 +878,176 @@ def chairoptions():
   """
   chairaction()
   
-def chairaction()
+def chairaction():
   global chairchoice, life, tigerfriend, happychair
   chairchoice = raw_input("(lowercase only)> ")
   if "axe" in chairchoice:
-    pass
+    axe()
   if "chair" in chairchoice:
-    pass
+    approachchair()
   if "lamp" in chairchoice:
-    pass
+    lamp()
   if "chest" in chairchoice:
-    pass
+    chest()
   if "door" in chairchoice:
-    pass
+    if tigerfriend is True and happychair is True:
+      success()
+    else:
+      madness()
   if "ladder" in chairchoice:
-    pass
-  
-  
-  introtext()
+    tigerintro2()
 
-# chair wants to be sat in, asks for it
-# lamp says DON"T
-# trunk says Don'T
-# lamps is trunks friend
+def chest():
+  global tigerfriend
+  print"""
+  You got to the chest.
+  This chest is ornate and classy. 
+  You wouldn't be surprised to find treasure in it.
+  Wanna open it? (yes/no)
+  """
+  openit = raw_input("> ")
+  if "y" in openit:
+    chestdeath()
+  elif "n" in openit:
+    print """
+    ...Yeah, best not to touch other people's chests.
+    You walk away.
+    """
+    if tigerfriend is True:
+      print "The tiger agrees with this decision."
+    else: 
+      pass
+    chairoptions()
+  else:
+    print "Not an option"
+    chest()
+    
+def lamp():
+  print """
+  The lamp is 60 inches tall, and manufactured in a modern style.
+  It doesn't look cheap. Its base is made of a really heavy metal. Cast-iron?
+  """
+  lampoptions()
+  
+def  lampoptions():
+  cont()
+  print """
+  Do you want to do something to the lamp?
+  1. BREAK the bulb.
+  2. simply TOUCH it.
+  3. FLICK on/off switch
+  4. BACK away/do nothing.
+  """
+  lampchoice = raw_input("[lowercase only]> ")
+  if "break" in lampchoice:
+    lampdeath()
+  elif "touch" in lampchoice:
+    lampdeath()
+  elif "flick" in lampchoice:
+    lampdeath()
+  elif "back" in lampchoice:
+    chairoptions()
+  else:
+    print "Not an option."
+    lampoptions()
+
+def axe():
+  print """
+  You go to the axe.
+  It's a normal axe. Decently heavy, decently sharp.
+  """
+  cont()
+  print """
+  There's only one thing to do with an axe: destroy things.
+  """
+  axeoptions()
+  
+def axeoptions():
+  contin()
+  print """
+  What do you want to attack?
+  
+  1. Attack the WURM (if you can find it)
+  2. Attack the DOOR
+  3. Attack the LAMP
+  4. Attack the CHAIR
+  5. Attack the TRUNK
+  6. Put the axe BACK
+  """
+  axechoice = raw_input("> ")
+  if "wurm" in axechoice:
+    wurmdeath3()
+  elif "door" in axechoice:
+    print """
+    You put a notch in the beautiful door. Good job!
+    You know you can open it, right?
+    """
+    axeoptions()
+  elif "lamp" in axechoice:
+    lampdeath2()
+  elif "chair" in axechoice:
+    chairattackdeath()
+  elif "trunk" in axechoice:
+    trunkattackdeath()
+  elif "back" in axechoice:
+    print "You put the axe back up against the wall next to the door."
+    chairoptions()
+  else:
+    print "Not an option."
+    axeoptions()
+  
+def approachchair():
+  print """
+  You go up to the chair that spoke to you.
+  As you do, you hear it again: "SIT IN ME!"
+  You consider sitting...
+  """
+  contin()
+  print """ 
+  But then you hear another voice in your mind.
+  You know this one is from the lamp. 
+  "It's a trap!!"
+  Then, again unmistakably, the trunk chimes in:
+  "Don't sit! Do. Not. Sit."
+  You can't talk back to any of them.
+  """
+  approachchairoptions()
+  
+def approachchairoptions():
+  global happychair, tigerfriend
+  contin()
+  print """
+  What will you do?
+  1. SIT anyways
+  2. PUNCH the chair
+  3. BACK away.
+  """
+  approachchairchoice = raw_input("[lowercase only]> ")
+  if "sit" in approachchairchoice:
+    print """
+    You sit.
+    The chair lets out an orgasmic sigh as you do.
+    """
+    if tigerfriend is True:
+      print "When you sit, your tiger jumps up in your lap and licks your face."
+    else:
+      pass
+    cont()
+    print """
+    The lamp and trunk groan in unison. 
+    "Uggggh Whyyyyy????"
+    "We HATE Chair. and that SOUND he makes."
+    """
+    happychair = True
+    print "Happychair: Achieved"
+    chairoptions()
+    
+  elif "punch" in approachchairchoice:
+    chairattackdeath()
+  elif "back" in approachchairchoice:
+    chairoptions()
+  
+
+introtext()
+
 
