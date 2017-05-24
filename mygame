@@ -119,7 +119,7 @@ def wurmdeath3():
       You swing at the wurm. 
       """
       contin()
-      """It is barely phased.
+      print """It is barely phased.
       The wurm eats you slowly, ass first, as you struggle. 
       Frankly, you deserve it.
       """
@@ -130,7 +130,7 @@ def wurmdeath3():
     It hasn't been that long.
     You swing at the wurm. """
     contin()
-    """It is barely phased.
+    print """It is barely phased.
     The wurm eats you slowly, ass first, as you struggle. 
     Frankly, you deserve it.
     """
@@ -144,7 +144,7 @@ def wurmscare():
   You got out of there just in time.
   """
   contin()
-  """
+  print """
   Relieved, you exhale and turn to survey the room...
   """
 
@@ -220,7 +220,7 @@ def punchdeath():
   Really? You punch a tiger?
   """
   contin()
-  """
+  print """
   She punches you back. Hers is a lot more effective.
   """
   loselife(2)
@@ -351,7 +351,7 @@ def chairattackdeath():
   It says, "OWWWWWWWwwww."
   """
   contin()
-  """
+  print"""
   It kicks you in the genitals with an oaken leg.
   """
   loselife(1)
@@ -432,15 +432,17 @@ def success():
   print """
   Well... except you're now best friends with a tiger,
   who follows you everywhere you go.
+  And she's got a sick-ass amulet, too! Just don't try to take it.
+  ...Ever.
   """
   contin()
   if myhatnow is True:
-    print "Plus, you've got a sick new hat."
+    print "Oh yeah--you've also got a sweet new hat."
     contin()
   else:
     pass
   print """
-  Good job! Thanks for playing!!!!
+  Good job, you WINNER you! Thanks for playing!!!!
   \t\t--CHRIS <3
   """
   endgame()
@@ -1167,5 +1169,6 @@ def approachchairoptions():
   
 
 introtext()
+
 
 
