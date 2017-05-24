@@ -441,6 +441,7 @@ def success():
   Good job! Thanks for playing!!!!
   \t\t--CHRIS <3
   """
+  endgame()
 #
 #
 #INTROTEXT, START, STARTCHOICE
@@ -800,19 +801,19 @@ def wine():
         if "feed" in feedit:
             print """
             You hold the cup to the tiger's... lips?
-            The tiger is ALL ABOUT this. It gulps greedily at the wine.
-            When it's done, it points its paw back at the cask.
+            The tiger is ALL ABOUT this. She gulps greedily at the wine.
+            When she's done, she points her paw back at the cask.
             """
             contin()
             print """
-            You go get him another cup! And another! This is a COOL tiger.
-            After cup number 3, he nuzzles you and you are best friends forever.
-            Everywhere you go, he follows you!
+            You go get her another cup! And another! This is a COOL tiger.
+            After cup number 3, she nuzzles you and you are best friends forever.
+            Everywhere you go, she follows you!
             Nifty!
             """
             tigerfriend = True
             contin()
-            print "Tigerfriend accomplished."
+            print "Tigerfriend: accomplished."
             contin()
             print "You've still gotta get home, though."
             contin()
@@ -851,14 +852,14 @@ def approach():
     print """
     Whatcha gon do?
     1. Take the AMULET
-    2. Take the PARTY HAT.
+    2. Take the party HAT.
     3. PET her.
     4. Back AWAY; do something else.
     """
     approachdecision = raw_input(">")
     if "amulet" in approachdecision:
       amuletdeath()
-    if "party" or "hat" in approachdecision:
+    if "hat" in approachdecision:
       print"""
       You make a grab for the party hat.
       As you do, you notice: that hat is on there TIGHT.
@@ -876,6 +877,11 @@ def approach():
       You can tell that you've released this tiger from a huge discomfort!
       """
       contin()
+      print """
+      She nuzzles you and you are best friends forever.
+      Everywhere you go, she follows you!
+      Nifty!
+      """
       tigerfriend = True
       myhatnow = True
       print "Tigerfriend: Accomplished"
@@ -893,6 +899,9 @@ def approach():
       print """
       After a minute or two, she gets real into it, like a housecat.
       This is a cool tiger!
+      """
+      contin()
+      print """
       If you pet too close to the amulet or the party hat, though, she tenses up.
       Eventually, she points a massive paw in the direction of... the wine cask?
       """
@@ -900,23 +909,29 @@ def approach():
       
     if "back" or "away" in approachdecision:
       tiger()
+    else:
+      print "Not an option"
+      approach()
   else:
     print """
     Whatcha gon do with your bro?
     1. Take the AMULET.
-    3. PET her.
-    4. Back AWAY; do something else.
+    2. PET her.
+    2. Back AWAY; do something else.
     """
     approachdecision = raw_input(">")
     if "amulet" in approachdecision:
       amuletdeath()
-    if "pet" in approachdecision:
+    elif "pet" in approachdecision:
       print """
       You pet the heck out of her.
       I'm glad you're such good friends!"""
       approach()
-    if "back" or "away" in approachdecision:
+    elif "back" or "away" in approachdecision:
       tiger()
+    else:
+      print "Not an option"
+      approach()
     
 
 #
@@ -991,6 +1006,9 @@ def chairaction():
       madness()
   if "ladder" in chairchoice:
     tigerintro2()
+  else:
+    print "not an option."
+    chairoptions()
 
 def chest():
   global tigerfriend
@@ -1141,9 +1159,11 @@ def approachchairoptions():
     chairattackdeath()
   elif "back" in approachchairchoice:
     chairoptions()
+  else:
+    print "Not an option."
+    approachchairoptions()
   
 
 introtext()
-
 
 
