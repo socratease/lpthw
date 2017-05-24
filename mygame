@@ -1,3 +1,7 @@
+time = 5
+timeisup = False
+firstchoice = None
+
 def endgame():
   print "Your game is over. Feel free to tempt fate again..."
 
@@ -11,7 +15,11 @@ def goladder():
   print "this is the goladder function"
   
 def examineladder():
-  print "This is the examine ladder function"
+  print """"
+  This ladder is a bunch limbs tied together by rope.
+  It's primitive, and pretty rotten.
+  It leads above you, obviously, but it's too dark to tell where it goes.
+  
   
 def gohole():
   print "This is the go ladder function.."
@@ -27,18 +35,20 @@ def wurmdeath():
   endgame()
 
 def starvation():
-  print "Starvation function"
+  print """
+  In fact, you've wasted so much time that you starved to death.
+  I SAID you were hungry...
+  """
+  endgame()
   
 def checktime(limit):
   global time, timeisup
+  time -= 1
   if time <= limit:
     timeisup = True
   else:
     print "..."
 
-time = 5
-timeisup == False
-firstchoice = None
 def startchoice(x): 
   while True:
     print "Would you like to examine the %s, or just go that way?" % x
@@ -54,21 +64,30 @@ def startchoice(x):
     else:
       print """
       Sure, you do that, whatever... 
-      but YOU'RE WATING TIME.
+      but you're WASTING TIME.
       """ % x
+      checktime(3)
+      if timeisup:
+        wurmdeath()
 
-def start():
+def starttext():
   print """
   You are in a dark cave. 
   How did you get there?
   You know you don't like camping...
   Oh well. You're hungry, so it's time to go home.
+  """
+  start()
+  
+def start():
+  print """
   You see:
-    1. A door
-    2. a ladder
-    3. a hole
+    1. close to you: A door
+    2. other side of the room: a ladder
+    3. other side of the room: a large hole in the ground
     
-  What is interesting?"""
+  What is interesting?
+  """
   while True: 
     next = raw_input("> ")
     global firstchoice, time, timeisup
@@ -77,7 +96,6 @@ def start():
        startchoice("door")
         
        if firstchoice is "examine":
-         time -= 1
          print "Time: ", time
          examinedoor()
        elif firstchoice is "go":
@@ -89,10 +107,11 @@ def start():
         startchoice("ladder")
         
         if firstchoice is "examine":
-          time -= 1
           checktime(3)
-            if timeisup == True:
-                starvation()
+          if timeisup: 
+            starvation()
+          else:
+            pass
           print "Time: ", time
           examineladder()
         elif firstchoice is "go":
@@ -104,7 +123,11 @@ def start():
         startchoice("hole")
         
         if firstchoice is "examine":
-         time -= 1
+         checktime(3)
+         if timeisup: 
+            starvation()
+         else:
+            pass
          print "Time: ", time
          examinehole()
         elif firstchoice is "go":
@@ -113,11 +136,9 @@ def start():
          print "It is broken :("
          
     else: 
-      time -= 1
-      print time
       print "You're wasting time..."
       checktime(3)
-        if timeisup is True:
+      if timeisup:
           starvation()
     
-start()
+starttext()
