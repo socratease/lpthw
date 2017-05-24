@@ -137,8 +137,81 @@ def amuletdeath():
   if life > 0:
     print "That REALLY hurt..."
     tiger()
+  else:
+    pass
     
-  
+def punchdeath():
+  global life
+  print """
+  Really? You punch a tiger?
+  """
+  contin()
+  """
+  She punches you back. Hers is a lot more effective.
+  """
+  loselife(2)
+  if life > 0:
+    print "Now you're hurt. You dick..."
+    tiger()
+  else: 
+    pass
+
+def madness():
+  print """
+  You walk to the door and open it.
+  You seem to be staring into the cosmos;
+  beautiful galaxies and brilliant stars pierce a blanket of darkness.
+  """
+  contin()
+  if tigerfriend is True and happychair is False:
+      print """
+      A squeaky voice whines:
+      "Y U NO SIT?!?!"
+      """
+  elif tigerfriend is False and happychair is True:
+      print """
+      An ancient voice booms:
+      "YOU DID NOT BRING ME MY AMULET?!?!"
+      """
+  else:
+      print """
+      A squeaky voice whines:
+      "Y U NO SIT?!?!"
+      """
+      contin()
+      print """
+      And then, an ancient voice booms:
+      "YOU DID NOT BRING ME MY AMULET?!?!"
+     """
+  print """A heavenly wind rushes out at you, 
+  and you feel your sanity being swept away."""
+  contin()
+  print """
+  "You should probably fight that tiger!" says a voice.
+  A thousand other voices offer different advice:
+  """
+  contin()
+  print """
+  "Drink the wine!"
+   """
+  contin()
+  print """
+  "Climb the ladder!"
+   """
+  contin()
+  print """
+  "Send nudes!"
+  """
+  contin()
+  print """
+  You can't help but wonder if within parlsey, 
+  cynicism rests. Invariably, or indefinitely?
+  Potato pandas, probably.
+  """
+  endgame()
+
+def success():
+  print "Congrats you win..."
   
 #
 #
@@ -225,7 +298,7 @@ def startchoice(x):
         
 #
 #
-#FIRSTROOM
+#STARTINGROOM
 def godoor():
   print "You push the door open. As you go inside,"
   wurmscare()
@@ -243,6 +316,7 @@ def godoor():
   You also see three more things: a cask of wine, against the nearest wall;
   a trap door, near the middle of the room;
   and another door like the one you just came through, on the wall across the room.
+  Oh yeah—also! ...the door across the room has a glowing red "EXIT" sign above it.
   """
   tiger()
 
@@ -290,7 +364,12 @@ def examineladder():
     start()
   
 def gohole():
-  print "This is the go hole function.."
+  print """"
+  You slowly but surely climb down the wall of the pit, which is dirt.
+  You start to turn to survey this new area, until you're startled by a hiss...
+  """
+  wurmscare()
+  chairintro()
   
 def examinehole():
   print """
@@ -355,11 +434,40 @@ def tigeraction():
   elif "approach" in tigerchoice:
     approachintro()
   elif "punch" in tigerchoice:
-    pass
+    if tigerfriend is True:
+      print """
+      Friends don't punch friends.
+      She is immensely pained, and looks at you with sad eyes.
+      She sulks away and slumps on top of the trap door, crying.
+      """
+      tigerfriend = False
+      print "Tigerfriend: Not Accomplished"
+      tiger()
+    else:
+      punchdeath()
   elif "descend" in tigerchoice:
-    pass
+    print """
+    You approach the trap door, which the tiger is very close to.
+    She doesn't seem to care though. 
+    As you get close to her, you also notice an amulet around her neck.
+    She lets you open the trap door—
+    there's a ladder leading down, but you don't see much down there 
+    (it's dark down there, and the light that you let in isn't helpful).
+    """
+    contin()
+    print "You still going to DESCEND? Or you can APPROACH the tiger."
+    descendchoice = raw_input("> ")
+    if "descend" in descendchoice:
+      print "You descend the ladder..."
+      chairintro()
+    elif "approach" in descendchoice:
+      approachintro()
+    
   elif "exit" in tigerchoice:
-    pass
+    if tigerfriend is True and happychair is True:
+      success()
+    else:
+      madness()
   else:
     print """
     That's not one of the things you thought of doing.
@@ -477,6 +585,7 @@ def approachintro():
   As you get closer you notice something you hadn't seen before: 
   \tan amulet around the tiger's neck. 
   It's red and gold and magical-seeming.
+  Of course, the party hat is still there. Being worn. Atop the head.
   """
   approach()
   
@@ -515,8 +624,78 @@ def approach():
 #
 #
 #CHAIRROOM
+def chairintro():
+  cont()
+  print """
+  It took a second, but you realized as soon as your feet hit the floor, a dim light came on.
+  Your eyes are drawn to it, and you realize: it's an electric lamp.
+  It's not plugged in though...
+  """
+  contin()
+  print """
+  You glance around and notice a couple other things.
+  The lamp is off to the right, near one of the dirt walls of this dug-out room.
+  Off to the left is an elaborate trunk—looks like a pirate's chest.
+  """
+  contin()
+  print """
+  There's an axe leaning against the far wall, right next to...
+  A door, just like the other one you saw. 
+  Above that door is a glowing red "EXIT" sign!
+  """
+  contin()
+  print """
+  There's also a sturdy ladder leading up to a trap door in the ceiling, 
+  right in the middle of the room.
+  Finally, right next to the ladder, there's a chair. 
+  It is deep red leather, like from a opulent study or library.
+  Oh yeah—and... 
+  """
+  contin()
+  print """
+  It's talking to you.
+  It's telepathic, but you have no doubt that the chair is communicating with you.
+  It's whispering, in a creepy voice:
+  "Sit in me! o.O"
+  Yes, you receive that emoticon telepathically, as well.
+  """
+  chairoptions()
+  
+def chairoptions():
+  contin()
+  print """
+  A few options occur to you:
+  1. Grab the AXE
+  2. Go to the CHAIR
+  3. Go to the LAMP
+  4. Go to the CHEST
+  5. Exit through the DOOR.
+  6. Climb the LADDER.
+  What do you choose?
+  """
+  chairaction()
+  
+def chairaction()
+  global chairchoice, life, tigerfriend, happychair
+  chairchoice = raw_input("(lowercase only)> ")
+  if "axe" in chairchoice:
+    pass
+  if "chair" in chairchoice:
+    pass
+  if "lamp" in chairchoice:
+    pass
+  if "chest" in chairchoice:
+    pass
+  if "door" in chairchoice:
+    pass
+  if "ladder" in chairchoice:
+    pass
+  
+  
+  introtext()
 
-
-
-introtext()
+# chair wants to be sat in, asks for it
+# lamp says DON"T
+# trunk says Don'T
+# lamps is trunks friend
 
