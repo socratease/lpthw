@@ -39,8 +39,10 @@ myhatnow = False
 #
 #UTILTIES
 def endgame():
-  print "Your game is over. Feel free to tempt fate again..."
-
+  print """
+  Your game is over. Feel free to tempt fate again...
+  (restart program by hitting RUN at the top)
+  """
 def contin():
   raw_input("[any key to continue]")
   
@@ -234,7 +236,7 @@ def chestdeath():
   You unlatch the trunk and leverage the lid open. 
   """
   contin()
-  """
+  print """
   As soon as you do, the trunk swallows you up to your hips,
   and then closes with such force that it chops your body clean in half.
   All the important parts of you are locked in this chest forever.
