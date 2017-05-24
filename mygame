@@ -1,4 +1,6 @@
-time = 5
+#
+#
+#VARIABLES
 time = 5
 timeisup = False
 firstchoice = None
@@ -8,108 +10,61 @@ life = 3
 happychair = False
 tigerfriend = False
 
+#
+#
+#UTILTIES
 def endgame():
   print "Your game is over. Feel free to tempt fate again..."
 
 def contin():
   raw_input("[any key to continue]")
   
-def godoor():
-  print "You push the door open. As you go inside,"
-  wurmscare()
+def dead():
   print """
-  Relieved, you exhale and turn to see a much larger room, with stone walls.
-  In the middle of the room is a tiger, prowling in circles.
-  The tiger wears a cheap conical paper party hat on his head. 
-  It definitely sees you...
-  You also see three more things: a cask of wine, against the nearest wall;
-  a trap door, near the middle of the room;
-  and another door like the one you just came through, on the wall across the room.
+  You have no more life. :(
   """
-  tiger()
+  endgame()
+  
+def checktime(limit):
+  global time, timeisup
+  time -= 1
+  if time <= limit:
+    timeisup = True
+  else:
+    print "..."
 
-#All these numbered options, in any of the rooms:
-#could they be transformed to a list or hash, 
-#and then I could access the ones I want?
-def tiger():
+def loselife(x):
+  global life
   contin()
-  print """
-  Some options run through your mind. What do you choose?
-  1. RETURN back through the door to the first room.
-  2. WINE!
-  3. SING Happy Birthday to the tiger
-  4. APPROACH the tiger
-  5. PUNCH the tiger
-  6. try to DESCEND through the trap door.
-  7. try to EXIT through the door across the room.
-  """
-  
-  
-def examinedoor():
-  print """"
-  That door is hellafancy! I mean, at least for a cave-door.
-  It's carved with many arcane symbols.
-  You lean in close to decipher the symbols. It's pretty dark, but then you see it:
-  These are all just dicks and swastikas.
-  """
-  checktime(2)
-  if timeisup:
-    wurmdeath()
+  life -= x
+  print "Life: ", life
+  if life <= 0:
+    dead()
   else:
-    start()
-    
-def goladder():
-  print """
-  You head up the ladder. Even though it seemed rickety,
-  it's pretty sturdy! I guess looks aren't everyth-- GAH!
-  """
-  contin()
-  print """On the fifth rung, the entire ladder collapses. 
-  You fall into the hole that you noticed earlier. 
-  Maybe don't climb old ladders near big holes?
-  You fell at least 15 feet, and it hurts"""
-  loselife(1)
-  contin()
-  wurmscare()
-  if life > 0:
-    gohole()
-  
-def examineladder():
-  print """"
-  This ladder is a bunch limbs tied together by rope.
-  It's primitive, and pretty rotten.
-  It leads above you, obviously, but it's too dark to tell where it goes.
-  """
-  checktime(2)
-  if timeisup:
-    wurmdeath()
-  else:
-    start()
-  
-def gohole():
-  print "This is the go hole function.."
-  
-def examinehole():
-  print """
-  This hole is more like a pit. 
-  It's not very deep—the bottom is about 10 feet down—
-  and the wall has footholds so you can climb down safely.
-  Opposite the climbable wall, you can tell there's a tunnel leading under
-  the room you're currently in.
-  """
-  checktime(2)
-  if timeisup:
-    wurmdeath()
-  else:
-    start()
-    
+    pass
+
+#
+#
+#DEATHS/SCARES
 def wurmdeath():
   contin()
   print """
   A monstrous wurm bursts from the wall.
   He doesn't think twice before sucking your organs out through your mouth.
-  You probably should've gotten out of there before he smelled you..."""
-  endgame()
+  You probably should've gotten out of there before he smelled you...
+  """
+  loselife(500)
+  
+def wurmdeath2():
+  contin()
+  print"""
+  The monstrous wurm that you saw is still there. 
+  Where did you think he'd be? 
+  It's been like 60 seconds MAX.
+  The wurm eats you slowly, ass first. 
+  Frankly, you deserve it.
+  """
+  loselife(500)
 
 def wurmscare():
   print """
@@ -126,52 +81,69 @@ def starvation():
   """
   endgame()
   
-def dead():
-  print """
-  You have no more life. :(
-  On other the hand, you have a lot more death than you did before.
-  """
-  endgame()
-  
-def checktime(limit):
-  global time, timeisup
-  time -= 1
-  if time <= limit:
-    timeisup = True
-  else:
-    print "..."
-
-def loselife(x):
+def winedeath():
   global life
-  life -= x
-  print "Life: ", life
-  if life <= 0:
-    dead()
-  else:
+  print """
+  When you put the cup to your lips, the tiger slaps your face off. 
+  She's been aging that wine for years.
+  Do you know how hard it is to make wine as a tiger?
+  """
+  loselife(2)
+  if life > 0:
+    print "You're barely alive."
+    tiger()
+  else: 
     pass
   
-def startchoice(x): 
-  while True:
-    print "Would you like to examine the %s, or just go that way?" % x
-    global firstchoice
-    choice = raw_input('>')
+def winesplashdeath():
+  print """
+  You splash the wine in the tiger's face.
+  What the hell, man? This tiger was totally chill!
+  It's not anymore, though. Now she's pissed.
+  """
+  contin()
+  print """
+  She bites your legs off, and just leaves you on the floor.
+  Then she drinks some wine.
+  Then she pisses on you.
+  """
+  loselife(467)
   
-    if "examine" in choice:
-      firstchoice = "examine"
-      break
-    elif  "go" in choice:
-      firstchoice = "go"
-      break
-    else:
-      print """
-      Sure, you do that, whatever... 
-      but you're WASTING TIME.
-      """ % x
-      checktime(3)
-      if timeisup:
-        wurmdeath()
-
-def starttext():
+def happybirthdaydeath():
+  global life
+  print """
+  It is NOT her birthday.
+  She HATES your singing.
+  She sprints at you, and before you can say "cha cha cha,"
+  she rakes a set of claws across your chest.
+  """
+  loselife(2)
+  if life > 0:
+    print "OUCH."
+    tiger()
+    
+def amuletdeath():
+  global life, tigerfriend
+  print """
+  THAT IS HERS!!!
+  Your life and friendship are worthless compared to her love for that amulet.
+  She bites you in the bicep. Chomp chomp.
+  (needless to say, you fail to get the amulet)
+  """
+  contin()
+  tigerfriend = False
+  print "Tigerfriend: Not accomplished."
+  loselife(2)
+  if life > 0:
+    print "That REALLY hurt..."
+    tiger()
+    
+  
+  
+#
+#
+#INTROTEXT, START, STARTCHOICE
+def introtext():
   print """
   You are in a dark cave. 
   How did you get there?
@@ -184,9 +156,9 @@ def start():
   contin()
   print """
   You see:
-    1. close to you: A door
-    2. other side of the room: a ladder
-    3. other side of the room: a large hole in the ground
+    1. close to you: A DOOR
+    2. other side of the room: a LADDER
+    3. other side of the room: a large HOLE in the ground
     
   What is interesting?
   """
@@ -229,5 +201,322 @@ def start():
       checktime(3)
       if timeisup:
           starvation()
+          
+def startchoice(x): 
+  while True:
+    print "Would you like to examine the %s, or just go that way?" % x
+    global firstchoice
+    choice = raw_input('>')
+  
+    if "examine" in choice:
+      firstchoice = "examine"
+      break
+    elif  "go" in choice:
+      firstchoice = "go"
+      break
+    else:
+      print """
+      Sure, you do that, whatever... 
+      but you're WASTING TIME.
+      """ % x
+      checktime(3)
+      if timeisup:
+        wurmdeath()
+        
+#
+#
+#FIRSTROOM
+def godoor():
+  print "You push the door open. As you go inside,"
+  wurmscare()
+  print """
+  Relieved, you exhale and turn to see a much larger room, with stone walls.
+  """
+  contin()
+  print """
+  In the middle of the room is a tiger, prowling in circles.
+  The tiger wears a cheap conical paper party hat on her head. 
+  She definitely sees you...
+  """
+  contin()
+  print """
+  You also see three more things: a cask of wine, against the nearest wall;
+  a trap door, near the middle of the room;
+  and another door like the one you just came through, on the wall across the room.
+  """
+  tiger()
+
+def examinedoor():
+  print """"
+  That door is hellafancy! I mean, at least for a cave-door.
+  It's carved with many arcane symbols.
+  You lean in close to decipher the symbols. It's pretty dark, but then you see it:
+  These are all just dicks and swastikas.
+  """
+  checktime(2)
+  if timeisup:
+    wurmdeath()
+  else:
+    start()
     
-starttext()
+def goladder():
+  print """
+  You head up the ladder. Even though it seemed rickety,
+  it's pretty sturdy! I guess looks aren't everyth-- GAH!
+  """
+  contin()
+  print """
+  On the fifth rung, the entire ladder collapses. 
+  You fall into the hole that you noticed earlier. 
+  Maybe don't climb old ladders near big holes?
+  You fell at least 15 feet, and it hurts
+  """
+  loselife(1)
+  contin()
+  wurmscare()
+  if life > 0:
+    gohole()
+  
+def examineladder():
+  print """"
+  This ladder is a bunch limbs tied together by rope.
+  It's primitive, and pretty rotten.
+  It leads above you, obviously, but it's too dark to tell where it goes.
+  """
+  checktime(2)
+  if timeisup:
+    wurmdeath()
+  else:
+    start()
+  
+def gohole():
+  print "This is the go hole function.."
+  
+def examinehole():
+  print """
+  This hole is more like a pit. 
+  It's not very deep—the bottom is about 10 feet down—
+  and the wall has footholds so you can climb down safely.
+  Opposite the climbable wall, you can tell there's a tunnel leading under
+  the room you're currently in.
+  """
+  checktime(2)
+  if timeisup:
+    wurmdeath()
+  else:
+    start()
+    
+#TIGERROOM
+#All these numbered options, in any of the rooms:
+#could they be transformed to a list or hash, 
+#and then I could access the ones I want?
+def tiger():
+  contin()
+  print """
+  Some options run through your mind.
+  1. RETURN through the same door, to the first room.
+  2. WINE!
+  3. SING Happy Birthday to the tiger
+  4. APPROACH the tiger
+  5. PUNCH the tiger
+  6. DESCEND through the trap door.
+  7. EXIT through the door across the room.
+  What do you choose?
+  """
+  tigeraction()
+  
+def tigeraction():
+  global tigerchoice, life, tigerfriend, happychair
+  tigerchoice = raw_input("(lowercase only)> ")
+  if "return" in tigerchoice:
+    print """
+    Tigers? NOPE.
+    You head back where you came from. 
+    You push open the door and stumble into the room."""
+    wurmdeath2()
+    
+  elif "wine" in tigerchoice:
+    print"""
+    Even in these strange circumstances, all you care about is wine.
+    I guess I DID say you were hungry.
+    Getting closer, you realize: there is a spigot type thing and a goblet.
+    Lucky you."""
+    prewine()
+  
+  elif "sing" in tigerchoice:
+    if tigerfriend is True:
+      print """
+      It is not her birthdaay, but she doesn't seem to mind. 
+      If you sing for too long though, she just stuffs a friendly paw into your mouth.
+      """
+      tiger()
+    else:
+      happybirthdaydeath()
+  elif "approach" in tigerchoice:
+    approachintro()
+  elif "punch" in tigerchoice:
+    pass
+  elif "descend" in tigerchoice:
+    pass
+  elif "exit" in tigerchoice:
+    pass
+  else:
+    print """
+    That's not one of the things you thought of doing.
+    you're not very creative..."""
+    tiger()
+
+def prewine():
+  contin()
+  print "Pour a drink? (yes or no)"
+  pour = raw_input("> ")
+  if "y" in pour:
+    wine()
+  elif "n" in pour: 
+    print """
+    You think, "Maybe drinking isn't the BEST idea right now..."
+    You can always come get some later."""
+    tiger()
+  else:
+    print "Yes or No, dude."
+    prewine()
+   
+def wine():
+  global tigerfriend
+  contin()
+  print """ 
+  You've got your goblet of wine. Smells pretty good!
+  You gonna DRINK it, or do you have something ELSE in mind?
+  """
+  drinkit = raw_input("> ")
+  if "drink" in drinkit:
+    if tigerfriend is not True:
+      winedeath()
+    else:
+      print "This wine is HELLATASTY. A fine vintage, indubitably."
+      contin()
+      tiger()
+  else: 
+    if tigerfriend is True:
+      print """
+      No matter what you try to do, 
+      the tiger just makes you feed her the wine. 
+      Unless you want to dirnk it! That's cool too. You're friends.
+      """
+      contin()
+      tiger()
+    else:
+      print """
+      Well the only other thing you can think of to do with it is...
+      Take it to the tiger?
+      """
+      contin()
+      print """
+      So, you wanna DRINK it, or TAKE it to the tiger?
+      """
+      drinkit = raw_input("> ")
+      if "drink" in drinkit:
+        winedeath()
+      elif "take" or "tiger" in drinkit:
+        print """
+        Uh... ok. You approach the tiger with the goblet of wine?
+        If you have a good reason for this, I don't know what it is.
+                """
+        contin()
+        print """ 
+        The tiger looks at you with... interest. Anticipation?
+        Encouraged, you step forward and raise the cup near her face.
+        She flinches slightly at this action.
+        """
+        contin()
+        print """
+        Your goal is to FEED this wine to the tiger, right?
+        or are you actually planning to, I don't know, SPLASH it on the Tiger's face?
+        """
+        feedit = raw_input("> ")
+        if "feed" in feedit:
+            print """
+            You hold the cup to the tiger's... lips?
+            The tiger is ALL ABOUT this. It gulps greedily at the wine.
+            When it's done, it points its paw back at the cask.
+            """
+            contin()
+            print """
+            You go get him another cup! And another! This is a COOL tiger.
+            After cup number 3, he nuzzles you and you are best friends forever.
+            Everywhere you go, he follows you!
+            Nifty!
+            """
+            tigerfriend = True
+            contin()
+            print "Tigerfriend accomplished."
+            contin()
+            print "You've still gotta get home, though."
+            contin()
+            tiger()
+            
+        elif "splash" in feedit:
+            winesplashdeath()
+            
+        else:
+            print """
+            At the crucial moment, you drop the goblet.
+            The wine splashes on the ground, and the tiger looks annoyed.
+            You figure you should go back to the cask if you want another goblet.
+            """
+            prewine()
+      else:
+        print "Not an option."
+        wine()
+        
+        
+def approachintro():
+  contin()
+  print"""
+  You approach the tiger, and she seems pretty chillaxed (though wary).
+  As you get closer you notice something you hadn't seen before: 
+  \tan amulet around the tiger's neck. 
+  It's red and gold and magical-seeming.
+  """
+  approach()
+  
+def approach():
+  global tigerfriend
+  contin()
+  print """
+  Whatcha gon do?
+  1. Take the AMULET
+  2. Take the PARTY HAT.
+  3. PET her.
+  4. Back AWAY; do something else.
+  """
+  approachdecision = raw_input(">")
+  if "amulet" in approachdecision:
+    amuletdeath()
+  if "party" or "hat" in approachdecision:
+    pass
+  if "pet" in approachdecision:
+    print """
+    You cautiously reach to pet the tiger. 
+    She is still wary, but accepts your touch.
+    """
+    contin()
+    print """
+    After a minute or two, she gets real into it, like a housecat.
+    This is a cool tiger!
+    If you pet too close to the amulet or the party hat, though, she tenses up.
+    Eventually, she points a massive paw in the direction of... the wine cask?
+    """
+    approach()
+    
+  if "back" or "away" in approachdecision:
+    tiger()
+
+#
+#
+#CHAIRROOM
+
+
+
+introtext()
+
