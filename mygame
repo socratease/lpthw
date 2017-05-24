@@ -1,20 +1,49 @@
 time = 5
+time = 5
 timeisup = False
 firstchoice = None
+tigerchoice = None
+chairchoice = None
+life = 3
+happychair = False
+tigerfriend = False
 
 def endgame():
   print "Your game is over. Feel free to tempt fate again..."
 
+def contin():
+  raw_input("[any key to continue]")
+  
 def godoor():
   print "You push the door open. As you go inside,"
   wurmscare()
   print """
   Relieved, you exhale and turn to see a much larger room, with stone walls.
   In the middle of the room is a tiger, prowling in circles.
-  The tiger wears a cheap conical paper party hat on his head.
-  You also see two more things: a cask of wine, near a wall,
-  and a trap door, near the middle of the room.
+  The tiger wears a cheap conical paper party hat on his head. 
+  It definitely sees you...
+  You also see three more things: a cask of wine, against the nearest wall;
+  a trap door, near the middle of the room;
+  and another door like the one you just came through, on the wall across the room.
   """
+  tiger()
+
+#All these numbered options, in any of the rooms:
+#could they be transformed to a list or hash, 
+#and then I could access the ones I want?
+def tiger():
+  contin()
+  print """
+  Some options run through your mind. What do you choose?
+  1. RETURN back through the door to the first room.
+  2. WINE!
+  3. SING Happy Birthday to the tiger
+  4. APPROACH the tiger
+  5. PUNCH the tiger
+  6. try to DESCEND through the trap door.
+  7. try to EXIT through the door across the room.
+  """
+  
   
 def examinedoor():
   print """"
@@ -31,6 +60,19 @@ def examinedoor():
     
 def goladder():
   print """
+  You head up the ladder. Even though it seemed rickety,
+  it's pretty sturdy! I guess looks aren't everyth-- GAH!
+  """
+  contin()
+  print """On the fifth rung, the entire ladder collapses. 
+  You fall into the hole that you noticed earlier. 
+  Maybe don't climb old ladders near big holes?
+  You fell at least 15 feet, and it hurts"""
+  loselife(1)
+  contin()
+  wurmscare()
+  if life > 0:
+    gohole()
   
 def examineladder():
   print """"
@@ -45,7 +87,7 @@ def examineladder():
     start()
   
 def gohole():
-  print "This is the go ladder function.."
+  print "This is the go hole function.."
   
 def examinehole():
   print """
@@ -62,6 +104,7 @@ def examinehole():
     start()
     
 def wurmdeath():
+  contin()
   print """
   A monstrous wurm bursts from the wall.
   He doesn't think twice before sucking your organs out through your mouth.
@@ -70,15 +113,23 @@ def wurmdeath():
 
 def wurmscare():
   print """
-  A monstrous wurm bursts from the wall in the room you were jsut in.
+  A monstrous wurm bursts from the wall in the room you were just in.
   He's pissed that he missed dinner, but seems reluctant to follow you...
   You got out of there just in time.
   """
+  contin()
 
 def starvation():
   print """
   In fact, you've wasted so much time that you starved to death.
   I SAID you were hungry...
+  """
+  endgame()
+  
+def dead():
+  print """
+  You have no more life. :(
+  On other the hand, you have a lot more death than you did before.
   """
   endgame()
   
@@ -90,6 +141,15 @@ def checktime(limit):
   else:
     print "..."
 
+def loselife(x):
+  global life
+  life -= x
+  print "Life: ", life
+  if life <= 0:
+    dead()
+  else:
+    pass
+  
 def startchoice(x): 
   while True:
     print "Would you like to examine the %s, or just go that way?" % x
@@ -121,6 +181,7 @@ def starttext():
   start()
   
 def start():
+  contin()
   print """
   You see:
     1. close to you: A door
