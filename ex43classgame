@@ -1,0 +1,130 @@
+from random import randint
+
+class Scene (object):
+  
+  def enter(self):
+    print "This scene is not yet configured. Subclass it and implement enter()."
+      
+class Engine(object):
+  
+    def __init__(self, scene_map):
+      self.scene_map = scene_map
+      
+    def play(self):
+      current_scene = self.scene_map.opening_scene()
+      
+      while True: 
+        print "/n------------"
+        next_scene_name = current_scene.enter()
+        current_scene = self.scene_map.next_scene(next_scene_name)
+        
+class Death(Scene):
+  
+    quips = [
+      "You died. You kinda suck at this.",
+      "Your mom would be proud... if she we smarter.",
+      "Such a loser",
+      "I have a kitten that is better at this."
+      ]
+      
+    def enter(self):
+      print Death.quips[randint(0, len(self.quips)-1)]
+
+class CentralCorridor(Scene):
+  
+  def enter(self):
+    print "This is the central corridor. Alian attack. shoot/dodge/joke?"
+    
+    action = raw_input("> ")
+    
+    if "shoot" in action:
+      print "you try ot shoot; die."
+      return "death"
+      
+    elif "dodge" in action:
+      print "you try to dodge; you die."
+      return 'death'
+      
+    elif "joke" in action:
+      print "you tell a joke: success"
+      return "laser_weapon_armory"
+      
+    else:
+        print " Not an option"
+        return 'centra_corridor'
+        
+class LaserWeaponArmory(Scene):
+  
+    def enter(self):
+      print "Guess the bomb code. 21?"
+      code = "%d" % (randint(1,9))
+      guess = raw_input("make a guess! > ")
+      guesses = 0
+      
+      while guess != code and guesses < 10:
+        print "WRONG"
+        guesses += 1
+        print "guesses remaining:", 8-guesses
+        guess = raw_input("make another guess! > ")
+        
+      if guess == code:
+        print "You got the bomb."
+        return "the_bridge"
+        
+      else:
+        print "It blows up, you die."
+        return "death"
+
+class TheBridge(Scene):
+  
+  def enter(self):
+    print "What you gonna do with the bomb on the bridge? throw/place"
+    action = raw_input("> ")
+    
+    if "throw" in action:
+      print " YOu throw. You die."
+      return "death"
+    elif "place" in action:
+      print "Success. Escape!"
+      return "escape_pod"
+    else: 
+      print "NOT AN OPTION."
+      return "the_bridge"
+      
+class EscapePod(Scene):
+  
+    def enter(self):
+      print "Pick an pod. It might work out."
+      
+      goodpod = randint(1,2)
+      guess = raw_input("pick pod 1 or 2: > ")
+      
+      if int(guess) != goodpod:
+        print "Wrong. Explodes."
+        return "death"
+      else:
+        print "correct. Escaped!"
+        return "finished"
+        
+class Map(object): 
+    
+    scenes = {
+      "central_corridor" : CentralCorridor(),
+      "laser_weapon_armory" : LaserWeaponArmory(),
+      "the_bridge" : TheBridge(),
+      "escape_pod" : EscapePod(),
+      "death" : Death()
+      }
+      
+    def __init__(self, start_scene):
+        self.start_scene = start_scene
+        
+    def next_scene(self, scene_name):
+        return Map.scenes.get(scene_name)
+        
+    def opening_scene(self):
+        return self.next_scene(self.start_scene)
+        
+amap = Map("central_corridor")
+agame = Engine(amap)
+agame.play()
