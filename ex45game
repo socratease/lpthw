@@ -1,0 +1,69 @@
+import random
+
+
+"""class prey(object):
+  def __init__(self, animal):
+    self.animal = animal
+  
+  def preyseen():
+    print "You notice movement out of the corner of your eye..."
+
+class bunny(prey):
+  def preyfound():
+    print "You spot a %s!" % animal
+    mindmg = 1
+    maxdmg = 5
+  
+
+class bear(prey):
+  def preyfound():
+    print "You spot a bear!"
+    mindmg = 10
+    maxdmg = 15
+
+class elephant(prey):
+  def preyfound():
+    print "You spot an elephant!"
+    mindmg = 15
+    maxdmg = 20
+
+class deer(prey):
+  def preyfound():
+    print "You spot a deer!"
+    mindmg = 5
+    maxdmg = 10
+  """
+
+class Gun(object, damage, weakness):
+  
+  def __init__(self):
+    self.damage = damage
+    self.weakness = weakness
+
+"""class Setting(object, temp):
+  
+  def __init__(self):
+    self.temp = temp
+    print "You find yourself somewhere you've never been..."
+
+
+
+class engine(object):
+  def __init__(object
+
+"""
+pistol = Gun(3, None)
+"""
+rocketlauncher = Gun(15, None)
+freezeray = Gun(10, "hot")
+heatray = Gun(10, "cold")
+
+gunlist = [pistol, rocketlauncher, freezeray, heatray]
+beach = Setting("hot")
+arctic = Setting("cold")
+forest = Setting(None)
+
+random.choice(gunlist)
+"""
+
+print pistol.damage
